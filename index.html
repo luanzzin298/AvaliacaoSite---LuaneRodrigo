@@ -3,17 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LR Store Profissional</title>
+<title>Luan e Rodrigo | Pra você LR Store</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 <style>
   textarea { resize: none; }
   .carousel-item img { height: 400px; object-fit: cover; width: 100%; }
+  .card-img-top { width: 100%; height: 300px; object-fit: cover; display: block; margin: 0 auto;}
   .card:hover { transform: translateY(-5px); transition: .3s; }
   .btn-category { transition: .3s; }
   .btn-category:hover { transform: scale(1.05); }
   footer a:hover { text-decoration: underline; }
+
+  /* Ajuste do espaçamento entre cards */
+  .card { margin: 2px; width: 300px;} /* margem mínima para cards próximos */
+  .row.g-custom { gap: 10px; } /* gap uniforme entre colunas */
+
   hr.divisor { border: 2px solid #0d6efd; width: 80%; margin: 50px auto; border-radius: 2px; }
+  .card-body { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
+  .btn-card { margin-top: auto; align-self: center; }
+  .card-body h6, .card-body p { text-align: center; }
 </style>
 </head>
 
@@ -33,12 +42,10 @@
         <li class="nav-item"><a class="nav-link fw-bold" href="#contato">Contato</a></li>
         <li class="nav-item"><a class="nav-link fw-bold" href="#parceiros">Seja um Parceiro</a></li>
       </ul>
-
       <form class="d-flex ms-auto" id="formBusca">
         <input id="campoBusca" class="form-control me-2" type="search" placeholder="Buscar produtos">
         <button class="btn btn-warning">Buscar</button>
       </form>
-
       <div class="dropdown ms-3">
         <button class="btn btn-outline-light position-relative" data-bs-toggle="dropdown">
           <i class="bi bi-cart"></i>
@@ -51,11 +58,11 @@
 </nav>
 
 <!-- CARROSSEL -->
-<div id="carouselBanners" class="carousel slide" data-bs-ride="carousel">
+<div id="carouselBanners" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
   <div class="carousel-inner">
-    <div class="carousel-item active"><img src="https://via.placeholder.com/1200x400?text=Super+Ofertas"></div>
-    <div class="carousel-item"><img src="https://via.placeholder.com/1200x400?text=Frete+Gr%C3%A1tis+Brasil"></div>
-    <div class="carousel-item"><img src="https://via.placeholder.com/1200x400?text=Promo%C3%A7%C3%B5es+Especiais"></div>
+    <div class="carousel-item active"><img src="img/bn1.jpg" class="d-block w-100"></div>
+    <div class="carousel-item"><img src="img/bn2.jpg" class="d-block w-100"></div>
+    <div class="carousel-item"><img src="img/bn3.jpg" class="d-block w-100"></div>
   </div>
   <button class="carousel-control-prev" data-bs-target="#carouselBanners" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
   <button class="carousel-control-next" data-bs-target="#carouselBanners" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
@@ -69,11 +76,7 @@
       <li class="nav-item"><a class="btn btn-outline-primary btn-category m-1" href="#" onclick="mostrarProdutos('informatica')">Informática</a></li>
       <li class="nav-item"><a class="btn btn-outline-primary btn-category m-1" href="#" onclick="mostrarProdutos('tv')">TV e Vídeo</a></li>
       <li class="nav-item"><a class="btn btn-outline-primary btn-category m-1" href="#" onclick="mostrarProdutos('eletro')">Eletrodomésticos</a></li>
-      <li class="nav-item"><a class="btn btn-outline-primary btn-category m-1" href="#" onclick="mostrarProdutos('moveis')">Móveis</a></li>
-      <li class="nav-item"><a class="btn btn-outline-primary btn-category m-1" href="#" onclick="mostrarProdutos('games')">Games</a></li>
-      <li class="nav-item"><a class="btn btn-outline-primary btn-category m-1" href="#" onclick="mostrarProdutos('beleza')">Beleza</a></li>
       <li class="nav-item"><a class="btn btn-outline-primary btn-category m-1" href="#" onclick="mostrarProdutos('esportes')">Esportes</a></li>
-      <li class="nav-item"><a class="btn btn-outline-primary btn-category m-1" href="#" onclick="mostrarProdutos('mercado')">Mercado</a></li>
     </ul>
   </div>
 </div>
@@ -91,7 +94,7 @@
 <section class="py-5">
   <div class="container">
     <h2 class="text-center text-primary mb-4" id="tituloLista">Todos os Produtos</h2>
-    <div class="row g-4" id="listaProdutos"></div>
+    <div class="row g-custom justify-content-center" id="listaProdutos"></div>
   </div>
 </section>
 
@@ -163,50 +166,55 @@
 
 <script>
 const produtos = [
-  {nome:"Smartphone X", preco:1999.99, tipo:"ofertas", categoria:"celulares"},
-  {nome:"Notebook Y", preco:3499.99, tipo:"ofertas", categoria:"informatica"},
-  {nome:"TV 4K 50''", preco:2799.99, tipo:"ofertas", categoria:"tv"},
-  {nome:"Air Fryer", preco:499.99, tipo:"ofertas", categoria:"eletro"},
-  {nome:"Fone Bluetooth", preco:299.99, tipo:"frete", categoria:"celulares"},
-  {nome:"Teclado Mecânico", preco:259.99, tipo:"frete", categoria:"informatica"},
-  {nome:"Cafeteira", preco:399.99, tipo:"promocoes", categoria:"eletro"},
-  {nome:"Guarda-Roupa", preco:1299.99, tipo:"promocoes", categoria:"moveis"},
-  {nome:"Console Game Z", preco:2999.99, tipo:"ofertas", categoria:"games"},
-  {nome:"Perfume Importado", preco:199.99, tipo:"promocoes", categoria:"beleza"},
-  {nome:"Bicicleta Esportiva", preco:999.99, tipo:"frete", categoria:"esportes"},
-  {nome:"Pacote de Café", preco:19.99, tipo:"promocoes", categoria:"mercado"}
+  {nome:"Iphone 16", preco:5499.99, tipo:"ofertas", categoria:"celulares", img:"ip2.jpg"},
+  {nome:"Galaxy S24 Ultra", preco:5299.99, tipo:"ofertas", categoria:"celulares", img:"o.jpg"},
+  {nome:"Realme C63", preco:1599.99, tipo:"frete", categoria:"celulares", img:"cel4.jpg"},
+  {nome:"Notebook P/ Jogos", preco:2900.99, tipo:"promocoes", categoria:"informatica", img:"note.jpg"},
+  {nome:"Notebook Gamer", preco:4499.99, tipo:"promocoes", categoria:"informatica", img:"note2.jpg"},
+  {nome:"Notebook P/Trabalho", preco:1999.99, tipo:"promocoes", categoria:"informatica", img:"note3.jpg"},
+  {nome:"TV 4K 70''", preco:3799.99, tipo:"ofertas", categoria:"tv", img:"tv2.jpg"},
+  {nome:"TV 1880p 50''", preco:2799.99, tipo:"ofertas", categoria:"tv", img:"tv.jpg"},
+  {nome:"Air Fryer Premium", preco:699.99, tipo:"promocoes", categoria:"eletro", img:"airfryer.jpg"},
+  {nome:"Air Fryer Multi", preco:799.99, tipo:"promocoes", categoria:"eletro", img:"mst.jpg"},
+  {nome:"Air Fryer Compacta", preco:599.99, tipo:"ofertas", categoria:"eletro", img:"maq2.jpg"},
+  {nome:"Faixa Elástica Profissional", preco:129.99, tipo:"frete", categoria:"esportes", img:"1.jpg"}, 
+  {nome:"Meia Cano Longo Premium", preco:49.99, tipo:"frete", categoria:"esportes", img:"4.jpg"},  
+  {nome:"Pochete Esportiva", preco:89.99, tipo:"frete", categoria:"esportes", img:"6.jpg"}, 
+  {nome:"Pochete Esportiva", preco:89.99, tipo:"promocoes", categoria:"esportes", img:"6.jpg"}, 
 ];
 
 const nomesCategorias = {
   celulares:"Celulares", informatica:"Informática", tv:"TV e Vídeo",
-  eletro:"Eletrodomésticos", moveis:"Móveis", games:"Games",
-  beleza:"Beleza", esportes:"Esportes", mercado:"Mercado"
+  eletro:"Eletrodomésticos",  
+  esportes:"Esportes",
 };
-
 
 function mostrarProdutos(filtro){
   const lista = document.getElementById("listaProdutos");
   const titulo = document.getElementById("tituloLista");
   let filtrados = produtos;
-  if(filtro!=="todos"){
+
+  if(filtro !== "todos"){
     const tipos = {ofertas:"💥 Super Ofertas", frete:"🚚 Frete Grátis", promocoes:"🎁 Promoções Especiais"};
     if(tipos[filtro]){ filtrados = produtos.filter(p=>p.tipo===filtro); titulo.textContent = tipos[filtro]; }
     else { filtrados = produtos.filter(p=>p.categoria===filtro); titulo.textContent = nomesCategorias[filtro]; }
   } else titulo.textContent = "Todos os Produtos";
 
   lista.innerHTML = filtrados.length ? filtrados.map(p=>`
-    <div class="col-md-3 col-6">
+    <div class="col-md-3 col-6 d-flex align-items-stretch">
       <div class="card h-100 text-center border-2 border-primary">
-        <img src="https://via.placeholder.com/200x150?text=${p.nome}" class="card-img-top">
+        <img src="img/${p.img}" class="card-img-top">
         <div class="card-body">
           <h6>${p.nome}</h6>
           <p class="text-success fw-bold">R$ ${p.preco.toFixed(2).replace('.',',')}</p>
-          <button class="btn btn-primary w-100" onclick="adicionarAoCarrinho(${produtos.indexOf(p)})">Adicionar</button>
+          <button class="btn btn-primary btn-card w-75">Adicionar</button>
         </div>
       </div>
-    </div>`).join('') : "<p class='text-center text-muted'>Nenhum produto encontrado.</p>";
+    </div>
+  `).join('') : "<p class='text-center text-muted'>Nenhum produto encontrado.</p>";
 }
 
+mostrarProdutos('todos');
 </script>
 </body>
 </html>
