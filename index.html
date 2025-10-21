@@ -15,9 +15,8 @@
   .btn-category:hover { transform: scale(1.05); }
   footer a:hover { text-decoration: underline; }
 
-  /* Ajuste do espaçamento entre cards */
-  .card { margin: 2px; width: 300px;} /* margem mínima para cards próximos */
-  .row.g-custom { gap: 10px; } /* gap uniforme entre colunas */
+  .card { margin: 2px; width: 300px;} 
+  .row.g-custom { gap: 10px; }
 
   hr.divisor { border: 2px solid #0d6efd; width: 80%; margin: 50px auto; border-radius: 2px; }
   .card-body { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
@@ -156,11 +155,26 @@
 </section>
 
 <!-- RODAPÉ -->
-<footer class="bg-dark text-white py-4 mt-5">
-  <div class="container text-center">
-    <p class="mb-0">© 2025 LR Store | Inspirado no Magalu.</p>
+<footer class="bg-white text-dark py-4 mt-5 border-top">
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Redes Sociais à esquerda -->
+    <div class="d-flex align-items-center">
+      <img src="img/rs.jpg" alt="Redes Sociais" height="40">
+    </div>
+
+    <!-- Texto central -->
+    <div class="text-center flex-fill">
+      <p class="mb-0">© 2025 LR Store | Inspirado no Magalu.</p>
+    </div>
+
+    <!-- Formas de pagamento à direita -->
+    <div class="d-flex align-items-center">
+      <img src="img/fr.jpg" alt="Formas de Pagamento" height="40">
+    </div>
   </div>
 </footer>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -172,15 +186,15 @@ const produtos = [
   {nome:"Notebook P/ Jogos", preco:2900.99, tipo:"promocoes", categoria:"informatica", img:"note.jpg"},
   {nome:"Notebook Gamer", preco:4499.99, tipo:"promocoes", categoria:"informatica", img:"note2.jpg"},
   {nome:"Notebook P/Trabalho", preco:1999.99, tipo:"promocoes", categoria:"informatica", img:"note3.jpg"},
-  {nome:"TV 4K 70''", preco:3799.99, tipo:"ofertas", categoria:"tv", img:"tv2.jpg"},
-  {nome:"TV 1880p 50''", preco:2799.99, tipo:"ofertas", categoria:"tv", img:"tv.jpg"},
-  {nome:"Air Fryer Premium", preco:699.99, tipo:"promocoes", categoria:"eletro", img:"airfryer.jpg"},
-  {nome:"Air Fryer Multi", preco:799.99, tipo:"promocoes", categoria:"eletro", img:"mst.jpg"},
-  {nome:"Air Fryer Compacta", preco:599.99, tipo:"ofertas", categoria:"eletro", img:"maq2.jpg"},
+  {nome:"Smart TV 4K 70''", preco:3799.99, tipo:"ofertas", categoria:"tv", img:"tv2.jpg"},
+  {nome:"Televisão 4K 60''", preco:2699.99, tipo:"ofertas", categoria:"tv", img:"tv3.jpg"},
+  {nome:"Televisão 4K 80'' Curvo", preco:4999.99, tipo:"ofertas", categoria:"tv", img:"tv.jpg"},
+  {nome:"Air Fryer", preco:699.99, tipo:"promocoes", categoria:"eletro", img:"airfryer.jpg"},
+  {nome:"Sanduicheira", preco:799.99, tipo:"promocoes", categoria:"eletro", img:"mst.jpg"},
+  {nome:"MultiService", preco:599.99, tipo:"ofertas", categoria:"eletro", img:"maq2.jpg"},
   {nome:"Faixa Elástica Profissional", preco:129.99, tipo:"frete", categoria:"esportes", img:"1.jpg"}, 
   {nome:"Meia Cano Longo Premium", preco:49.99, tipo:"frete", categoria:"esportes", img:"4.jpg"},  
-  {nome:"Pochete Esportiva", preco:89.99, tipo:"frete", categoria:"esportes", img:"6.jpg"}, 
-  {nome:"Pochete Esportiva", preco:89.99, tipo:"promocoes", categoria:"esportes", img:"6.jpg"}, 
+  {nome:"Pochete Esportiva", preco:89.99, tipo:"frete", categoria:"esportes", img:"6.jpg"},
 ];
 
 const nomesCategorias = {
