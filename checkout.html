@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizar Compra - LR Store</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body { background-color: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+.checkout-container {
+max-width: 900px; margin: 50px auto; background: #fff;
+padding: 30px; border-radius: 15px; box-shadow: 0 0 25px rgba(0,0,0,0.1);
+}
+h1,h3 { color: #0d6efd; font-weight: bold; }
+#resumoPedido { max-height: 300px; overflow-y: auto; background: #f1f3f5; border-radius: 8px; padding: 15px; }
+#resumoPedido div { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #dee2e6; }
+#resumoPedido div:last-child { border-bottom: none; }
+#totalPedido { font-size: 1.2rem; font-weight: bold; text-align: right; margin-top: 10px; }
+.btn-voltar { margin-top: 15px; }
+label { font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="checkout-container">
+<h1 class="mb-4 text-center">Finalizar Compra</h1>
+
+<h3>Resumo do Pedido</h3>
+<div id="resumoPedido" class="mb-3"></div>
+<p id="totalPedido"></p>
+
+<h3>Dados para Entrega</h3>
+<form id="formCheckout">
+<div class="row mb-3">
+<div class="col-md-6"><input type="text" class="form-control" id="nome" placeholder="Nome completo" required></div>
+<div class="col-md-6"><input type="email" class="form-control" id="email" placeholder="Email" required></div>
+</div>
+<div class="mb-3"><textarea class="form-control" id="endereco" rows="2" placeholder="Endereço completo" required></textarea></div>
+<div class="row mb-3">
+<div class="col-md-6"><input type="tel" class="form-control" id="telefone" placeholder="Telefone" required></div>
+<div class="col-md-6"><input type="text" class="form-control" id="cep" placeholder="CEP" required></div>
+</div>
+<div class="mb-3">
+<select class="form-select" id="pagamento" required>
+<option value="" selected disabled>Forma de Pagamento</option>
+<option value="cartao">Cartão de Crédito</option>
+<option value="pix">Pix</option>
+<option value="boleto">Boleto</option>
+</select>
+</div>
+
+<button type="submit" class="btn btn-success w-100 mb-3">Confirmar Pedido</button>
+<button type="button" class="btn btn-secondary w-100 btn-voltar" onclick="voltarLoja()">← Voltar para a Loja</button>
+</form>
+
+<div id="mensagemSucesso" class="alert alert-success mt-3 d-none text-center">
+<h5>✅ Pedido realizado com sucesso!</h5>
+<p>Você receberá um e-mail com os detalhes do pedido em breve.</p>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const carrinho = JSON.parse(localStorage.getItem('carrinhoLRStore')) || [];
+const resumoPedido = document.getElementById('resumoPedido');
+const totalPedido = document.getElementById('totalPedido');
+const mensagemSucesso = document.getElementById('mensagemSucesso');
+const formCheckout = document.getElementById('formCheckout');
+
+function mostrarResumo() {
+  if (carrinho.length === 0) {
+    resumoPedido.innerHTML = '<p class="text-center text-muted">Seu carrinho está vazio.</p>';
+    totalPedido.textContent = '';
+    return;
+  }
+  let total = 0;
+  resumoPedido.innerHTML = carrinho.map(item => {
+    total += item.preco;
+    return `<div><span>${item.nome}</span><span>R$ ${item.preco.toFixed(2).replace('.',',')}</span></div>`;
+  }).join('');
+  totalPedido.textContent = `Total: R$ ${total.toFixed(2).replace('.',',')}`;
+}
+
+mostrarResumo();
+
+formCheckout.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const nome = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const telefone = document.getElementById('telefone').value.trim();
+  const endereco = document.getElementById('endereco').value.trim();
+  const cep = document.getElementById('cep').value.trim();
+  const pagamento = document.getElementById('pagamento').value;
+
+  if(carrinho.length === 0){
+    alert("Seu carrinho está vazio!");
+    return;
+  }
+  // Formatar mensagem para WhatsApp
+  let msg = `Olá, quero finalizar meu pedido:%0A`;
+  carrinho.forEach(p=>{
+    msg += `- ${p.nome}: R$ ${p.preco.toFixed(2).replace('.',',')}%0A`;
+  });
+  const total = carrinho.reduce((a,b)=>a+b.preco,0);
+  msg += `%0ATotal: R$ ${total.toFixed(2).replace('.',',')}%0A`;
+  msg += `Nome: ${nome}%0AEmail: ${email}%0ATelefone: ${telefone}%0ACEP: ${cep}%0AEndereço: ${endereco}%0AForma de Pagamento: ${pagamento}`;
+
+  // Abrir WhatsApp com número profissional
+  window.open(`https://wa.me/5532988621242?text=${msg}`, '_blank');
+
+  // Limpar carrinho e mostrar mensagem
+  localStorage.removeItem('carrinhoLRStore');
+  formCheckout.reset();
+  resumoPedido.innerHTML = '';
+  totalPedido.textContent = '';
+  mensagemSucesso.classList.remove('d-none');
+});
+
+function voltarLoja() {
+  window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>
